@@ -1,24 +1,10 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 const cors = require("cors");
-const knex = require("knex");
-require("dotenv").config();
 
-const register = require("./controllers/register");
-const signin = require("./controllers/signin");
-const profile = require("./controllers/profile");
-const image = require("./controllers/image");
-
-const db = knex({
-  client: process.env.DB_CLIENT,
-  connection: {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB,
-  },
-});
+const signInRoute = require("./routes/signin");
+const registerRoute = require("./routes/register");
+const profileRoute = require("./routes/profile");
+const imageRoute = require("./routes/image");
 
 const app = express();
 
@@ -26,24 +12,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
+app.use("/signin", signInRoute);
+app.use("/register", registerRoute);
+app.use("/profile", profileRoute);
+app.use("/image", imageRoute);
+
 app.get("/", (req, res) => {
   res.json();
-});
-
-app.post("/signin", (req, res) => {
-  signin.handleSignin(req, res, db, bcrypt);
-});
-
-app.post("/register", (req, res) => {
-  register.handleRegister(req, res, db, bcrypt);
-});
-
-app.get("/profile/:id", (req, res) => {
-  profile.handleProfile(req, res, db);
-});
-
-app.put("/image", (req, res) => {
-  image.handleImage(req, res, db);
 });
 
 // server listening on port 3001 --------------------
