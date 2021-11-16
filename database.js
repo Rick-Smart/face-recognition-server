@@ -4,7 +4,7 @@ require("dotenv").config();
 const db = knex({
   client: process.env.DB_CLIENT,
   connection: {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.CLEARDB_DATABASE_URL,
     ssl: true,
   },
 });
