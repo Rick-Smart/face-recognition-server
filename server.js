@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const PORT = process.env.DEV_PORT;
+const PORT = process.env.PORT;
 
 // end point imports -------------------------------
 const signInRoute = require("./routes/signin");
@@ -26,6 +26,6 @@ app.use("/image", imageRoute);
 // });
 
 // server listening on port 3001 --------------------
-app.listen(process.env.PORT || PORT, () => {
+app.listen(PORT || 3001, () => {
   console.log(`Server listening on port ${PORT}`);
 });
